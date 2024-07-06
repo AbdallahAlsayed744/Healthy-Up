@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="App.Starting.Theme" parent="Theme.SplashScreen">
+
+        <item name="windowSplashScreenBackground">@color/primarycolor</item>
+
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_design</item>
+
+        <item name="android:statusBarColor">@color/primarycolor</item>
+
+        <item name="postSplashScreenTheme">@style/Theme.HealthyUp</item>
+
+    </style>
+</resources>
