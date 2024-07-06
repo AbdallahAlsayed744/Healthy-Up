@@ -16,14 +16,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Home
+
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -49,10 +46,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.healthyup.R
 
+
 @Composable
-fun SignInScreen() {
-    var password by remember { mutableStateOf("") }
-    var showPassword by remember { mutableStateOf(false) }
+
+fun SignInScreen(){
+
+    SignInScreenBody()
+
+
+}
+
+@Composable
+fun SignInScreenBody() {
+
     Column(modifier = Modifier
         .padding(top = 50.dp)
         .fillMaxSize()) {
@@ -82,27 +88,11 @@ fun SignInScreen() {
             .fillMaxWidth() ,fontSize = 22.sp,color = colorResource(
             id = R.color.black))
 
-        Mytextfield(modifier = Modifier
+        MytextfieldPassword(modifier = Modifier
             .padding(start = 30.dp)
             .fillMaxWidth(0.9f), hint = "Enter Password"){
 
         }
-//        OutlinedTextField(
-//            value = password,
-//            onValueChange = { password = it },
-//            label = { Text("Password") },
-//            visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
-//            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-//            trailingIcon = {
-//                IconButton(onClick = { showPassword = !showPassword }) {
-//                    Icon(
-//                        imageVector = if (showPassword) Icons.Filled.Add else Icons.Filled.Home,
-//                        contentDescription = "Toggle Password Visibility"
-//                    )
-//                }
-//            },
-//            modifier = Modifier.fillMaxWidth()
-//        )
 
         Text(text = "Forget Password", modifier = Modifier
             .padding(top = 5.dp, end = 34.dp)
@@ -195,6 +185,7 @@ fun Mytextfield(modifier: Modifier = Modifier, hint: String,onSearch:(String)->U
                 text = it
                 onSearch(it)
             },
+
             maxLines = 1,
             prefix = {
 
@@ -210,8 +201,61 @@ fun Mytextfield(modifier: Modifier = Modifier, hint: String,onSearch:(String)->U
 
 }
 
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun SignInScreenPreview() {
-    SignInScreen()
+fun MytextfieldPassword(modifier: Modifier = Modifier, hint: String,onSearch:(String)->Unit) {
+
+    var password by remember { mutableStateOf("") }
+    var showPassword by remember { mutableStateOf(false) }
+
+    var text by rememberSaveable {
+        mutableStateOf("")
+    }
+
+    Box(modifier = modifier.padding(vertical = 15.dp)) {
+        TextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .shadow(4.dp, RoundedCornerShape(10.dp))
+                .clip(AbsoluteRoundedCornerShape(15.dp)),
+            value = text,
+            placeholder = {
+                Text(text = hint)
+            },
+            onValueChange = {
+                text = it
+                onSearch(it)
+            },
+            trailingIcon = {
+                IconButton(onClick = { showPassword = !showPassword }) {
+
+                    Icon(
+                         painter = painterResource(id = if (showPassword) R.drawable.baseline_visibility_24 else R.drawable.baseline_visibility_off_24), contentDescription ="Toggle Password Visibility"
+
+                    )
+
+
+
+                }
+            },
+            visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            maxLines = 1,
+            prefix = {
+
+            },
+            singleLine = true,
+            colors = TextFieldDefaults.colors(
+                Color.Gray,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
+            )
+        )
+    }
+
 }
+
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//fun SignInScreenPreview() {
+//    SignInScreen()
+//}
